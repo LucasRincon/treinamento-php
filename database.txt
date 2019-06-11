@@ -1,0 +1,30 @@
+CREATE TABLE bank.clientes
+(
+  id integer NOT NULL,
+  nome character varying NOT NULL,
+  endereco character varying NOT NULL,
+  cidade character varying NOT NULL,
+  CONSTRAINT id PRIMARY KEY (id)
+)
+
+CREATE TABLE bank.contas
+(
+  idconta integer NOT NULL,
+  cidadeconta character varying(50) NOT NULL,
+  saldo real NOT NULL,
+  agencia integer NOT NULL,
+  CONSTRAINT idconta PRIMARY KEY (idconta)
+)
+
+CREATE TABLE bank.contasclientes
+(
+  idclientes integer NOT NULL,
+  idcontas integer NOT NULL,
+  CONSTRAINT fk_id_clientes FOREIGN KEY (idclientes)
+      REFERENCES bank.clientes (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE CASCADE,
+  CONSTRAINT fk_id_contas FOREIGN KEY (idcontas)
+      REFERENCES bank.contas (idconta) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE CASCADE,
+  CONSTRAINT uk_clientecontas UNIQUE (idclientes, idcontas)
+)
